@@ -1,0 +1,113 @@
+:root {
+  --primary-color: #01880a;
+  --primary-background-color: rgba(231, 231, 231, 0.578);
+  --secondery-background-color: rgba(0, 0, 0, 0.78);
+  --my-radius: 0.2rem;
+}
+
+.main_container {
+  height: 47rem;
+  background-color: var(--primary-background-color);
+
+  .slider_container {
+    display: flex;
+    flex-direction: column;
+
+    .image_container {
+      padding: 0.9rem;
+      border-radius: var(--my-radius);
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 520px;
+        object-fit: cover;
+      }
+
+      .slider_button {
+        position: absolute;
+        top: 40%;
+        padding: 2rem 2.3rem;
+        border-radius: 50%;
+        background-color: rgba(35, 33, 33, 0.422);
+        display: none;
+        cursor: pointer;
+        border: none;
+
+        &.prev_button {
+          position: absolute;
+          left: 2rem;
+        }
+        &.next_button {
+          right: 2rem;
+        }
+      }
+
+      &:hover .slider_button {
+        display: block;
+      }
+    }
+
+    .text_container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+
+      span {
+        color: rgb(248, 220, 62);
+      }
+
+      h1 {
+        font-size: 50px;
+      }
+
+      button {
+        padding: 0 2rem;
+        border: none;
+        border-radius: var(--my-radius);
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: bolder;
+        cursor: pointer;
+        font-size: large;
+        display: inline-flex;
+        align-items: center;
+        column-gap: 1rem;
+      }
+    }
+  }
+}
+
+/* category card */
+
+.card_container {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem;
+  gap: 1rem;
+
+  .card {
+    width: 9%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1.1rem;
+    background-color: #fff;
+    border-radius: var(--my-radius);
+    flex-wrap: wrap;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    &:hover {
+      border: 1px solid var(--primary-color);
+    }
+  }
+}
+/* category card */

@@ -1,0 +1,133 @@
+:root {
+  --primary-color: #01880a;
+  --primary-background-color: #e7e7e793;
+  --secondery-background-color: rgba(0, 0, 0, 0.78);
+  --my-radius: 0.2rem;
+}
+
+.future_main {
+  height: 80vh;
+  padding: 1rem;
+
+  .heading_future {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .slider_button {
+      display: flex;
+      padding: 2rem;
+      justify-content: space-between;
+      gap: 0.6rem;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        border: 1px solid var(--primary-color);
+        border-radius: 35%;
+        background-color: transparent;
+        padding: 0.3rem 0.4rem;
+        cursor: pointer;
+        color: var(--primary-color);
+      }
+    }
+  }
+
+  /*future card  */
+  .featured_card {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    overflow: hidden;
+
+    .card_container {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background-color: var(--primary-background-color);
+      min-width: 17%;
+      height: 25.5rem;
+      overflow: hidden;
+
+      .glassSection {
+        width: 100%;
+        position: relative;
+        background-color: #fff;
+        border-radius: var(--my-radius);
+
+        img {
+          width: 100%;
+        }
+        .discountBadge {
+          position: absolute;
+          top: 0;
+          left: 10px;
+          width: 40px;
+          height: 60px;
+          background: orange;
+          color: #ffffff;
+          font-size: 12px;
+          font-weight: bold;
+          text-align: center;
+          clip-path: polygon(100% 0, 100% 100%, 51% 78%, 0 100%, 0 0);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1;
+        }
+      }
+
+      .detail_future {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+
+        h4 {
+          margin: 0.5rem;
+        }
+        span,
+        del {
+          margin: 0.5rem;
+          font-size: smaller;
+          color: #2b2a2a7e;
+        }
+        p {
+          margin: 0.5rem;
+          color: red;
+          font-weight: bold;
+        }
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+          cursor: pointer;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          border: 1px solid var(--primary-color);
+          column-gap: 1rem;
+          padding: 0.5rem 1rem;
+          color: var(--primary-color);
+          font-weight: bold;
+          border-radius: var(--my-radius);
+
+          &.heart {
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+          }
+
+          &:hover {
+            background-color: var(--primary-color);
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  /*future card  */
+}
