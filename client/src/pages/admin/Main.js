@@ -220,7 +220,7 @@ const Main = () => {
                 </thead>
                 <tbody>
                   {item.map((item) => (
-                    <tr>
+                    <tr key={item.id}>
                       <td>
                         <img src={`/upload/${item.item_img}`} alt="user" />
                       </td>

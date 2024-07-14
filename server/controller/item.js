@@ -4,7 +4,6 @@ const path = require("path");
 
 // getting code
 const getItem = async (req, res) => {
-  console.log("object");
   try {
     const Que = "SELECT * FROM item";
 

@@ -12,8 +12,9 @@ import {
 } from "lucide-react";
 
 const Navbar = () => {
-  const [openList, setOpenList] = useState();
+  const [openList, setOpenList] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
   const handleList = () => {
     setOpenList(!openList);
   };
@@ -107,70 +108,62 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-      {isCartOpen && (
-        <div className="cart-drawer">
-          <div className="cart-drawer-content">
-            <button className="close-btn" onClick={handleCartClick}>
-              Close
-            </button>
-            <h2>Your Cart</h2>
+
+      <div className={`cart-drawer ${isCartOpen ? "open" : ""}`}>
+        <div className="cart-drawer-content">
+          <button className="close-btn" onClick={handleCartClick}>
+            Close
+          </button>
+          <h2>Your Cart</h2>
+          <div>
             <div>
               <div>
-                <div>
-                  <h3>Recent Orders</h3>
-                </div>
-                <br />
-
-                <table style={{ border: "1px solid grey", width: "90%" }}>
-                  <thead>
-                    <tr>
-                      <th>Product Image</th>
-                      <th>Product Name</th>
-                      <th>Product Price</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody style={{ border: "1px solid dark" }}>
-                    {/* {cart.map((item) => (
-                      <>
-                        <tr key={item.id} style={{ textAlign: "center" }}>
-                          <td>
-                            <img
-                              src={`/uploads/${item.image}`}
-                              alt="item banner"
-                              width={50}
-                            />
-                          </td>
-                          <td>
-                            <p>{item.title}</p>
-                          </td>
-                          <td>
-                            <p>{item.price}</p>
-                          </td>
-                          <td>
-                            <button
-                              style={{
-                                backgroundColor: "red",
-                                padding: "0.8rem 0.5rem",
-                                borderRadius: "0.5rem",
-                                color: "#fff",
-                                cursor: "pointerF",
-                              }}
-                              // onClick={() => handleRemoveFromCart(item.id)}
-                            >
-                              Remove
-                            </button>
-                          </td>
-                        </tr>
-                      </>
-                    ))} */}
-                  </tbody>
-                </table>
+                <h3>Recent Orders</h3>
               </div>
+              <br />
+
+              <table style={{ border: "1px solid grey", width: "90%" }}>
+                <thead>
+                  <tr>
+                    <th>Product Image</th>
+                    <th>Product Name</th>
+                    <th>Product Price</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody style={{ border: "1px solid dark" }}>
+                  {/* Example product item */}
+                  <tr style={{ textAlign: "center" }}>
+                    <td>
+                      <img src="example.jpg" alt="item banner" width={50} />
+                    </td>
+                    <td>
+                      <p>Example Item</p>
+                    </td>
+                    <td>
+                      <p>$10.00</p>
+                    </td>
+                    <td>
+                      <button
+                        style={{
+                          backgroundColor: "red",
+                          padding: "0.8rem 0.5rem",
+                          borderRadius: "0.5rem",
+                          color: "#fff",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                  {/* Add more items here */}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };

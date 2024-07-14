@@ -1,76 +1,26 @@
 import { Heart, ShoppingCart } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
+import { getItemData } from "../../store/slices/item";
+import { useEffect } from "react";
+// redux
+import { addToCart } from "../../store/slices/addtoCard";
 
-const FeaturedCard = ({ startIndex }) => {
-  const cards = [
-    {
-      id: 1,
-      title: "Nestle Cerelac Mixed Fruits & Wheat with Milk",
-      weight: "500g Pack",
-      price: "$36.00",
-      originalPrice: "$59.12",
-      discount: "25%",
-      img: require("../../assets/client/image/future_img.png"),
-    },
-    {
-      id: 2,
-      title: "Nestle Cerelac Mixed Fruits & Wheat with Milk",
-      weight: "500g Pack",
-      price: "$36.00",
-      originalPrice: "$59.12",
-      discount: "25%",
-      img: require("../../assets/client/image/future_img2.png"),
-    },
-    {
-      id: 3,
-      title: "Nestle Cerelac Mixed Fruits & Wheat with Milk",
-      weight: "500g Pack",
-      price: "$36.00",
-      originalPrice: "$59.12",
-      discount: "55%",
-      img: require("../../assets/client/image/future_img3.png"),
-    },
-    {
-      id: 4,
-      title: "Nestle Cerelac Mixed Fruits & Wheat with Milk",
-      weight: "500g Pack",
-      price: "$36.00",
-      originalPrice: "$59.12",
-      discount: "25%",
-      img: require("../../assets/client/image/future_img4.png"),
-    },
-    {
-      id: 5,
-      title: "Nestle Cerelac Mixed Fruits & Wheat with Milk",
-      weight: "500g Pack",
-      price: "$36.00",
-      originalPrice: "$59.12",
-      discount: "25%",
-      img: require("../../assets/client/image/future_img5.png"),
-    },
-    {
-      id: 6,
-      title: "Nestle Cerelac Mixed Fruits & Wheat with Milk",
-      weight: "500g Pack",
-      price: "$37.00",
-      originalPrice: "$59.12",
-      discount: "25%",
-      img: require("../../assets/client/image/future_img6.png"),
-    },
-    {
-      id: 7,
-      title: "Nestle Cerelac Mixed Fruits & Wheat with Milk",
-      weight: "500g Pack",
-      price: "$36.00",
-      originalPrice: "$59.12",
-      discount: "85%",
-      img: require("../../assets/client/image/future_img3.png"),
-    },
-  ];
+const FeaturedCard = ({ startIndex, totalCards }) => {
+  const item = useSelector((state) => state.item);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getItemData());
+  }, [dispatch]);
 
   const visibleCards = [];
-  for (let i = 0; i < 5; i++) {
-    visibleCards.push(cards[(startIndex + i) % cards.length]);
+  for (let i = 0; i < totalCards; i++) {
+    visibleCards.push(item[(startIndex + i) % item.length]);
   }
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+  };
 
   return (
     <>
@@ -79,24 +29,24 @@ const FeaturedCard = ({ startIndex }) => {
           <div className="glassSection">
             <div className="discountBadge">
               <span>
-                {item.discount}
+                50
                 <br /> off
               </span>
             </div>
-            <img src={item.img} alt="card banner" />
+            <img src={`/upload/${item.item_img}`} alt="card banner" />
           </div>
           <div className="detail_future">
-            <h4>{item.title}</h4>
-            <span>{item.weight}</span>
+            <h4>{item.item_title}</h4>
+            <span>{item.item_weight}kg</span>
             <p>
-              {item.price} <del>{item.originalPrice}</del>
+              {item.item_price} <del>25</del>
             </p>
           </div>
           <div className="buttons">
             <button className="heart">
               <Heart />
             </button>
-            <button>
+            <button onClick={handleAddToCart(item)}>
               Add <ShoppingCart />
             </button>
           </div>
