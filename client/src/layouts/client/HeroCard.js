@@ -12,7 +12,42 @@ const Card = () => {
     },
     {
       id: 1,
-      img: require("../../assets/client/image/hero_card.webp"),
+      img: require("../../assets/client/image/future_img2.png"),
+      text: "This is a card",
+    },
+    {
+      id: 1,
+      img: require("../../assets/client/image/future_img3.png"),
+      text: "This is a card",
+    },
+    {
+      id: 1,
+      img: require("../../assets/client/image/future_img5.png"),
+      text: "This is a card",
+    },
+    {
+      id: 1,
+      img: require("../../assets/client/image/future_img4.png"),
+      text: "This is a card",
+    },
+    {
+      id: 1,
+      img: require("../../assets/client/image/future_img5.png"),
+      text: "This is a card",
+    },
+    {
+      id: 1,
+      img: require("../../assets/client/image/future_img6.png"),
+      text: "This is a card",
+    },
+    {
+      id: 1,
+      img: require("../../assets/client/image/future_img.png"),
+      text: "This is a card",
+    },
+    {
+      id: 1,
+      img: require("../../assets/client/image/future_img4.png"),
       text: "This is a card",
     },
     {
@@ -22,42 +57,7 @@ const Card = () => {
     },
     {
       id: 1,
-      img: require("../../assets/client/image/hero_card.webp"),
-      text: "This is a card",
-    },
-    {
-      id: 1,
-      img: require("../../assets/client/image/hero_card.webp"),
-      text: "This is a card",
-    },
-    {
-      id: 1,
-      img: require("../../assets/client/image/hero_card.webp"),
-      text: "This is a card",
-    },
-    {
-      id: 1,
-      img: require("../../assets/client/image/hero_card.webp"),
-      text: "This is a card",
-    },
-    {
-      id: 1,
-      img: require("../../assets/client/image/hero_card.webp"),
-      text: "This is a card",
-    },
-    {
-      id: 1,
-      img: require("../../assets/client/image/hero_card.webp"),
-      text: "This is a card",
-    },
-    {
-      id: 1,
-      img: require("../../assets/client/image/hero_card.webp"),
-      text: "This is a card",
-    },
-    {
-      id: 1,
-      img: require("../../assets/client/image/hero_card.webp"),
+      img: require("../../assets/client/image/future_img3.png"),
       text: "This is a card",
     },
   ];

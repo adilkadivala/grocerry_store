@@ -42,7 +42,7 @@ const FeaturedCard = ({ startIndex }) => {
           <div className="glassSection">
             <div className="discountBadge">
               <span>
-                {item.discount}
+                20%
                 <br /> off
               </span>
             </div>
