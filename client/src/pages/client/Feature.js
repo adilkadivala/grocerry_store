@@ -34,7 +34,7 @@ const Feature = () => {
       </div>
 
       <div className="featured_card">
-        <FeatureCard startIndex={startIndex} totalCards={totalCards} />
+        <FeatureCard startIndex={startIndex} />
       </div>
     </div>
   );

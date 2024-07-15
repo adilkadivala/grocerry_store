@@ -10,10 +10,19 @@ import {
   User,
   Minus,
 } from "lucide-react";
+import { removeFromCart } from "../../store/slices/addtoCard";
+import { useSelector, useDispatch } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [openList, setOpenList] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { loginWithRedirect } = useAuth0();
+
+  const cartItems = useSelector((state) => state.cart);
 
   const handleList = () => {
     setOpenList(!openList);
@@ -21,6 +30,56 @@ const Navbar = () => {
 
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
+  };
+
+  const handleRemoveFromCart = (id) => {
+    dispatch(removeFromCart(id));
+    toast.success("item Removed successfullY");
+  };
+
+  const paymentHandler = async (item) => {
+    try {
+      const response = await axios.post("http://localhost:6556/order", {
+        amount: item.item_price * 100,
+        receipt: `receipt#${item.id}`,
+      });
+
+      const { id: order_id, amount: order_amount, currency } = response.data;
+
+      const options = {
+        key: process.env.RAZORPAY_KEY_ID,
+        amount: order_amount,
+        currency: currency,
+        name: "Your Company Name",
+        description: "Test Transaction",
+        order_id: order_id,
+        handler: function (response) {
+          alert(`Payment ID: ${response.razorpay_payment_id}`);
+          alert(`Order ID: ${response.razorpay_order_id}`);
+          alert(`Signature: ${response.razorpay_signature}`);
+        },
+        prefill: {
+          name: "Your Name",
+          email: "youremail@example.com",
+          contact: "9574653335",
+        },
+        notes: {
+          address: "Your Address",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      if (window.Razorpay) {
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      } else {
+        console.error("Razorpay SDK not loaded");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
@@ -88,10 +147,14 @@ const Navbar = () => {
 
         {/* buttons */}
         <div className="buttons">
-          <div className="comp account">
+          <button
+            style={{ backgroundColor: "transparent" }}
+            onClick={() => loginWithRedirect()}
+            className="comp account"
+          >
             <User />
             <p>Account</p>
-          </div>
+          </button>
           <div className="comp whishlist">
             <Heart />
             <p>Whishlist</p>
@@ -104,7 +167,7 @@ const Navbar = () => {
           >
             <ShoppingCart />
             <p>My Cart</p>
-            <span className="count">1</span>
+            <span className="count">{cartItems.length}</span>
           </button>
         </div>
       </div>
@@ -133,31 +196,49 @@ const Navbar = () => {
                 </thead>
                 <tbody style={{ border: "1px solid dark" }}>
                   {/* Example product item */}
-                  <tr style={{ textAlign: "center" }}>
-                    <td>
-                      <img src="example.jpg" alt="item banner" width={50} />
-                    </td>
-                    <td>
-                      <p>Example Item</p>
-                    </td>
-                    <td>
-                      <p>$10.00</p>
-                    </td>
-                    <td>
-                      <button
-                        style={{
-                          backgroundColor: "red",
-                          padding: "0.8rem 0.5rem",
-                          borderRadius: "0.5rem",
-                          color: "#fff",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                  {/* Add more items here */}
+                  {cartItems.map((item) => (
+                    <tr style={{ textAlign: "center" }} key={item.id}>
+                      <td>
+                        <img
+                          src={`/upload/${item.item_img}`}
+                          alt="item banner"
+                          width={50}
+                        />
+                      </td>
+                      <td>
+                        <p>{item.item_title}</p>
+                      </td>
+                      <td>
+                        <p>{item.item_price}</p>
+                      </td>
+                      <td>
+                        <button
+                          style={{
+                            backgroundColor: "red",
+                            padding: "0.8rem 0.5rem",
+                            borderRadius: "0.5rem",
+                            color: "#fff",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => handleRemoveFromCart(item.id)}
+                        >
+                          Remove
+                        </button>
+                        <button
+                          style={{
+                            backgroundColor: "Blue",
+                            padding: "0.8rem 0.5rem",
+                            borderRadius: "0.5rem",
+                            color: "#fff",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => paymentHandler(item)}
+                        >
+                          Buy Now
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

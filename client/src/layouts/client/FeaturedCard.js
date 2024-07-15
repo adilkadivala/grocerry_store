@@ -2,10 +2,13 @@ import { Heart, ShoppingCart } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { getItemData } from "../../store/slices/item";
 import { useEffect } from "react";
-// redux
 import { addToCart } from "../../store/slices/addtoCard";
+import { useAuth0 } from "@auth0/auth0-react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const FeaturedCard = ({ startIndex, totalCards }) => {
+const FeaturedCard = ({ startIndex }) => {
+  const { isAuthenticated } = useAuth0();
   const item = useSelector((state) => state.item);
   const dispatch = useDispatch();
 
@@ -13,23 +16,33 @@ const FeaturedCard = ({ startIndex, totalCards }) => {
     dispatch(getItemData());
   }, [dispatch]);
 
+  if (!item || item.length === 0) {
+    return <div>Loading...</div>;
+  }
+
   const visibleCards = [];
-  for (let i = 0; i < totalCards; i++) {
+  for (let i = 0; i < 5; i++) {
     visibleCards.push(item[(startIndex + i) % item.length]);
   }
 
   const handleAddToCart = (product) => {
+    if (!isAuthenticated) {
+      toast.error("Please create an account to add items to the cart.");
+      return;
+    } else {
+      toast.success("item added successfullY");
+    }
     dispatch(addToCart(product));
   };
 
   return (
     <>
-      {visibleCards.map((item) => (
-        <div className="card_container" key={item.id}>
+      {visibleCards.map((item, index) => (
+        <div className="card_container" key={item.id || index}>
           <div className="glassSection">
             <div className="discountBadge">
               <span>
-                50
+                {item.discount}
                 <br /> off
               </span>
             </div>
@@ -46,7 +59,7 @@ const FeaturedCard = ({ startIndex, totalCards }) => {
             <button className="heart">
               <Heart />
             </button>
-            <button onClick={handleAddToCart(item)}>
+            <button onClick={() => handleAddToCart(item)}>
               Add <ShoppingCart />
             </button>
           </div>
