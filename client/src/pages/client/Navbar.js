@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../assets/client/css/Navbar.css";
 import {
   Apple,
@@ -10,7 +10,8 @@ import {
   User,
   Minus,
 } from "lucide-react";
-import { removeFromCart } from "../../store/slices/addtoCard";
+import { useNavigation } from "react-router-dom";
+import { addToCart, removeFromCart } from "../../store/slices/addtoCard";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
@@ -20,9 +21,23 @@ const Navbar = () => {
   const [openList, setOpenList] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dispatch = useDispatch();
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
 
   const cartItems = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem("cartItems");
+    if (storedCartItems) {
+      const parsedCartItems = JSON.parse(storedCartItems);
+      parsedCartItems.forEach((item) => {
+        dispatch(addToCart(item));
+      });
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const handleList = () => {
     setOpenList(!openList);
@@ -34,7 +49,7 @@ const Navbar = () => {
 
   const handleRemoveFromCart = (id) => {
     dispatch(removeFromCart(id));
-    toast.success("item Removed successfullY");
+    toast.success("Item removed successfully");
   };
 
   const paymentHandler = async (item) => {
@@ -61,7 +76,7 @@ const Navbar = () => {
         prefill: {
           name: "Your Name",
           email: "youremail@example.com",
-          contact: "9574653335",
+          contact: "7284046227",
         },
         notes: {
           address: "Your Address",
@@ -147,14 +162,26 @@ const Navbar = () => {
 
         {/* buttons */}
         <div className="buttons">
-          <button
-            style={{ backgroundColor: "transparent" }}
-            onClick={() => loginWithRedirect()}
-            className="comp account"
-          >
-            <User />
-            <p>Account</p>
-          </button>
+          {isAuthenticated ? (
+            <button
+              style={{ backgroundColor: "transparent" }}
+              onClick={() => logout()}
+              className="comp account"
+            >
+              <User />
+              <p>Logout</p>
+            </button>
+          ) : (
+            <button
+              style={{ backgroundColor: "transparent" }}
+              onClick={() => loginWithRedirect()}
+              className="comp account"
+            >
+              <User />
+              <p>Login</p>
+            </button>
+          )}
+
           <div className="comp whishlist">
             <Heart />
             <p>Whishlist</p>
@@ -167,7 +194,9 @@ const Navbar = () => {
           >
             <ShoppingCart />
             <p>My Cart</p>
-            <span className="count">{cartItems.length}</span>
+            <span className="count">
+              {isAuthenticated ? cartItems.length : 0}
+            </span>
           </button>
         </div>
       </div>
