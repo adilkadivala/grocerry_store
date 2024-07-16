@@ -11,7 +11,6 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
-// data route
 app.use("/", itemRoute);
 
 app.post("/order", async (req, res) => {

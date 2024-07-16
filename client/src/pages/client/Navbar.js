@@ -68,11 +68,11 @@ const Navbar = () => {
         name: "Your Company Name",
         description: "Test Transaction",
         order_id: order_id,
-        handler: function (response) {
-          alert(`Payment ID: ${response.razorpay_payment_id}`);
-          alert(`Order ID: ${response.razorpay_order_id}`);
-          alert(`Signature: ${response.razorpay_signature}`);
-        },
+        // handler: function (response) {
+        //   alert(`Payment ID: ${response.razorpay_payment_id}`);
+        //   alert(`Order ID: ${response.razorpay_order_id}`);
+        //   alert(`Signature: ${response.razorpay_signature}`);
+        // },
         prefill: {
           name: "Your Name",
           email: "youremail@example.com",
