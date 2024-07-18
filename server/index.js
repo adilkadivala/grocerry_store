@@ -6,12 +6,14 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const Razorpay = require("razorpay");
 const itemRoute = require("./routes/item");
+const cartRoute = require("./routes/cart");
 
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
 app.use("/", itemRoute);
+app.use("/", cartRoute);
 
 app.post("/order", async (req, res) => {
   try {

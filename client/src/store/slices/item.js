@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const getItemData = createAsyncThunk("item/getItem", async () => {
   const response = await axios.get("http://localhost:6556/getitem");
+  console.log(response.data);
   return response.data;
 });
 

@@ -2,8 +2,8 @@ import { Heart, ShoppingCart } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { getItemData } from "../../store/slices/item";
 import { useEffect } from "react";
-  import { addToCart } from "../../store/slices/addtoCard";
-  import { useAuth0 } from "@auth0/auth0-react";
+import { addToCart } from "../../store/slices/addtoCard";
+import { useAuth0 } from "@auth0/auth0-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

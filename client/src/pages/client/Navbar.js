@@ -10,7 +10,6 @@ import {
   User,
   Minus,
 } from "lucide-react";
-import { useNavigation } from "react-router-dom";
 import { addToCart, removeFromCart } from "../../store/slices/addtoCard";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -21,7 +20,7 @@ const Navbar = () => {
   const [openList, setOpenList] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dispatch = useDispatch();
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, logout, user } = useAuth0();
 
   const cartItems = useSelector((state) => state.cart);
 
@@ -68,11 +67,6 @@ const Navbar = () => {
         name: "Your Company Name",
         description: "Test Transaction",
         order_id: order_id,
-        // handler: function (response) {
-        //   alert(`Payment ID: ${response.razorpay_payment_id}`);
-        //   alert(`Order ID: ${response.razorpay_order_id}`);
-        //   alert(`Signature: ${response.razorpay_signature}`);
-        // },
         prefill: {
           name: "Your Name",
           email: "youremail@example.com",
