@@ -1,6 +1,6 @@
 const dbConnect = require("../connect/connect");
 
-// get item to cart
+// Get cart items for a user
 const getCartItems = async (req, res) => {
   const { userId } = req.params;
   const query = `

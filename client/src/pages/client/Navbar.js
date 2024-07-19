@@ -10,11 +10,11 @@ import {
   User,
   Minus,
 } from "lucide-react";
-import { addToCart, removeFromCart } from "../../store/slices/addtoCard";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { fetchCartItems, removeCartItem } from "../../store/slices/addtoCard";
 
 const Navbar = () => {
   const [openList, setOpenList] = useState(false);
@@ -25,18 +25,10 @@ const Navbar = () => {
   const cartItems = useSelector((state) => state.cart);
 
   useEffect(() => {
-    const storedCartItems = localStorage.getItem("cartItems");
-    if (storedCartItems) {
-      const parsedCartItems = JSON.parse(storedCartItems);
-      parsedCartItems.forEach((item) => {
-        dispatch(addToCart(item));
-      });
+    if (isAuthenticated) {
+      dispatch(fetchCartItems(user.sub));
     }
-  }, [dispatch]);
-
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
+  }, [dispatch, isAuthenticated, user]);
 
   const handleList = () => {
     setOpenList(!openList);
@@ -46,8 +38,8 @@ const Navbar = () => {
     setIsCartOpen(!isCartOpen);
   };
 
-  const handleRemoveFromCart = (id) => {
-    dispatch(removeFromCart(id));
+  const handleRemoveFromCart = (itemId) => {
+    dispatch(removeCartItem({ userId: user.sub, itemId }));
     toast.success("Item removed successfully");
   };
 
@@ -218,7 +210,6 @@ const Navbar = () => {
                   </tr>
                 </thead>
                 <tbody style={{ border: "1px solid dark" }}>
-                  {/* Example product item */}
                   {cartItems.map((item) => (
                     <tr style={{ textAlign: "center" }} key={item.id}>
                       <td>

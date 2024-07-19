@@ -2,13 +2,13 @@ import { Heart, ShoppingCart } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { getItemData } from "../../store/slices/item";
 import { useEffect } from "react";
-import { addToCart } from "../../store/slices/addtoCard";
+import { addCartItem } from "../../store/slices/addtoCard";
 import { useAuth0 } from "@auth0/auth0-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FeaturedCard = ({ startIndex }) => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   const item = useSelector((state) => state.item);
   const dispatch = useDispatch();
 
@@ -30,9 +30,10 @@ const FeaturedCard = ({ startIndex }) => {
       toast.error("Please create an account to add items to the cart.");
       return;
     } else {
-      toast.success("item added successfullY");
+      toast.success("Item added successfully");
     }
-    dispatch(addToCart(product));
+
+    dispatch(addCartItem({ userId: user.sub, item: product }));
   };
 
   return (
