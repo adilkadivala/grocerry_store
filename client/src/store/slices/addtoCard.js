@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (userId, thunkAPI) => {
     try {
-      const response = await axios.get(`http://localhost:6556/cart/${userId}`);
+      const response = await axios.get(
+        `http://localhost:6556/getcartitem/${userId}`
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -18,11 +19,14 @@ export const addCartItem = createAsyncThunk(
   "cart/addCartItem",
   async ({ userId, item }, thunkAPI) => {
     try {
-      await axios.post("http://localhost:6556/cart", {
-        user_id: userId,
-        item_id: item.id,
-      });
-      return item;
+      const response = await axios.post(
+        "http://localhost:6556/insertcartcart",
+        {
+          user_id: userId,
+          item_id: item.id,
+        }
+      );
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -31,11 +35,15 @@ export const addCartItem = createAsyncThunk(
 
 export const removeCartItem = createAsyncThunk(
   "cart/removeCartItem",
-  async ({ userId, itemId }, thunkAPI) => {
+  async ({ id }, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:6556/cart/${userId}/${itemId}`);
-      return itemId;
+      const response = await axios.delete(
+        `http://localhost:6556/deletecartitem/${id}`
+      );
+      console.log("Response from server:", response);
+      return;
     } catch (error) {
+      console.error("Error in removeCartItem thunk:", error);
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }

@@ -37,9 +37,10 @@ const addCartItem = async (req, res) => {
 
 // Remove item from cart
 const removeCartItem = async (req, res) => {
-  const { userId, itemId } = req.params;
-  const query = "DELETE FROM cart WHERE user_id = ? AND item_id = ?";
-  dbConnect.query(query, [userId, itemId], (err) => {
+  const { id } = req.params;
+
+  const query = "DELETE FROM cart WHERE id =? ";
+  dbConnect.query(query, [id], (err) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ message: "Internal server error" });

@@ -38,9 +38,16 @@ const Navbar = () => {
     setIsCartOpen(!isCartOpen);
   };
 
-  const handleRemoveFromCart = (itemId) => {
-    dispatch(removeCartItem({ userId: user.sub, itemId }));
-    toast.success("Item removed successfully");
+  const handleRemoveFromCart = (id) => {
+    dispatch(removeCartItem({ id }))
+      .unwrap()
+      .then(() => {
+        dispatch(fetchCartItems(user.sub));
+        toast.success("Item removed successfully");
+      })
+      .catch((error) => {
+        toast.error("Failed to remove item");
+      });
   };
 
   const paymentHandler = async (item) => {
@@ -248,7 +255,7 @@ const Navbar = () => {
                           }}
                           onClick={() => paymentHandler(item)}
                         >
-                          Buy Now
+                          Proceed to payment
                         </button>
                       </td>
                     </tr>
