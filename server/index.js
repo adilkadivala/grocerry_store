@@ -37,7 +37,7 @@ app.post("/order", async (req, res) => {
 
     res.json(order);
   } catch (error) {
-    console.error(error.message);
+    console.error(error.message, "payment getway error");
     res.status(500).json({ message: "Something went wrong" });
   }
 });

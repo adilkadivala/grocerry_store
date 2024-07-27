@@ -9,6 +9,13 @@ const Client = () => {
         <Navbar />
         <Hero />
         <Feature />
+
+        {/* <dialog>
+          <form method="dialog">
+            <h1>This is a dialog</h1>
+            <button type="submit">Login</button>
+          </form>
+        </dialog> */}
       </div>
     </>
   );
